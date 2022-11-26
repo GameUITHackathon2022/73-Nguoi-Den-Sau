@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 using DG.Tweening;
 using UnityEngine.UI;
 
 public class CameraControl : MonoBehaviour
 {
+    public Text dialog;
     public Joystick moveAnalog;
     public Button jumpButton;
     public Material grass;
@@ -17,15 +19,15 @@ public class CameraControl : MonoBehaviour
     public static CameraControl instance;
     public bool isSwappable;
     protected Transform trans;
-  
+    public Volume volume;
     public PlayerController currentPlayer;
     public float SpeedMove = 3;
     public Transform limitMin;
     public Transform limitMax;
     public Vector3 Offset;
-
+    ColorAdjustments colors;
     //[HideInInspector] public BaseController controller;
-
+    
     protected float cameraWidth;
     protected float cameraHeight;
     public float margin_X;
@@ -35,6 +37,8 @@ public class CameraControl : MonoBehaviour
 
     //protected Joystick shootAnalog;
     public float lookAhead;
+
+   
     private void Awake()
     {
         instance = this;
@@ -44,6 +48,12 @@ public class CameraControl : MonoBehaviour
     {
         grass.SetFloat("_Fade", 0);
     }
+    public void ShowText(string content, float duration)
+    {
+        dialog.text = content;
+        dialog.DOFade(1, duration).SetEase(Ease.OutQuad).OnComplete(()=>dialog.DOFade(0,1f));
+    }
+  
     public IEnumerator ResetIsSwappable(float duration)
     {
         isSwappable = false;
@@ -56,12 +66,21 @@ public class CameraControl : MonoBehaviour
     }
     public void CameraZoomOut(float duration, Vector3 pos, int index = 0, int size = 15)
     {
-        currentPlayer = null;
-        this.transform.DOMove(pos, duration/4);
-        
-        Camera.main.DOOrthoSize(size, duration).OnComplete(()=> { SwitchTarget(index); Camera.main.DOOrthoSize(6, 1); });
-        
-        
+        if (index != -1)
+        {
+            currentPlayer = null;
+            this.transform.DOMove(pos, duration / 4);
+
+            Camera.main.DOOrthoSize(size, duration).OnComplete(() => { SwitchTarget(index); Camera.main.DOOrthoSize(6, 1); });
+        }
+        else
+        {
+            currentPlayer = null;
+            this.transform.DOMove(pos, duration / 4);
+
+            Camera.main.DOOrthoSize(size, duration);
+
+        }
     }
     public void CameraZoomOut(float duration, Vector3 pos, PlayerController player, int size = 15)
     {

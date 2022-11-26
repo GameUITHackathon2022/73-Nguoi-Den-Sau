@@ -56,24 +56,14 @@ public class WaterController : PlayerController
 
         DOVirtual.Color(water.outColor, new Color(0.2f, 0.8f, 1, 0.3f), 6, v => { water.outColor = v; water.Generate(); });
         DOVirtual.Color(water.inColor, new Color(0, 0.3f, 1, 0.4f), 6, v => { water.inColor = v; water.Generate(); });
-        //water.colors[1] = new Color(0.2f, 0.8f, 1, 0.3f);
-        //water.colors[0] = new Color(0, 0.3f, 1, 0.4f);
-        //water.inColor = new Color(0.2f, 0.8f, 1, 0.3f);
-        //water.outColor = new Color(0.2f, 0.8f, 1, 0.3f);
-
-        //water.Generate();
+    
         water.transform.DOMoveY(-20, 6);
-        //water.BuildRectengularMesh(false);
+      
         CameraControl.instance.ChangeCheckPointPos(2);
-        //CameraControl.instance.SwitchTarget(3);
+       
         this.gameObject.SetActive(false);
         windCurrent.SetActive(false);
-        
-       
-        //water.colors.Clear();
-        //water.colors.Add(inColor);
-        //water.colors.Add(outColor);
-        //water.colors.Add(lineColor);
-       
+
+        CameraControl.instance.ShowText("the water has been cleansed", 5);
     }
 }

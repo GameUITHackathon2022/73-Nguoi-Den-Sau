@@ -46,7 +46,7 @@ public class LightController : PlayerController
         CameraControl.instance.CameraZoomOut(5, new Vector3(60, 10, -10));
         CameraControl.instance.players[4].gameObject.SetActive(true);//water appears
         CameraControl.instance.ChangeCheckPointPos(1);
-
+        CameraControl.instance.ShowText("the light shines upon the land", 5);
         this.gameObject.SetActive(false);
     }
 }

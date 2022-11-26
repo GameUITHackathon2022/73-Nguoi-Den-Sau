@@ -17,6 +17,7 @@ public class MushroomController : PlayerController
     ParticleSystem.EmissionModule emissionSplash;
     private void Start()
     {
+        firstTimeSwap = true;
         jumpBtn.onClick.AddListener(Jump);
         CameraControl.instance.CameraZoomOut(6, CameraControl.instance.players[1].transform.position, 0, 15);
         //isControlled = true;

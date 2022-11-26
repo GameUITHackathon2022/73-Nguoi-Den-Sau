@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController:MonoBehaviour
 {
@@ -58,19 +59,27 @@ public class PlayerController:MonoBehaviour
             return Physics2D.Raycast(transform.position, Vector2.down, 1, GroundLayer);
         }
     }
-
+    //void FadeAway()
+    //{
+    //    this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>().DOFade(0, 1f).OnComplete(()=> this.gameObject.SetActive(false););
+        
+    //}
   
     protected void SwapSoul2()
     {
         if (firstTimeSwap)
         {
+            CameraControl.instance.checkPoint.SetActive(true);
             firstTimeSwap = false;
             CameraControl.instance.CameraZoomOut(6, CameraControl.instance.checkPoint.transform.position,this);
+            
         }
+
             
         print("found player control");
         if (CameraControl.instance.isSwappable)
         {
+           
             print("isswappable");
             if (!isControlled)
             {

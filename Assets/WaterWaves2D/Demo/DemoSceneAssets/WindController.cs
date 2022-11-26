@@ -42,11 +42,13 @@ public class WindController : PlayerController
         {
             cloud.DOColor(new Color32(255, 255, 255, (byte)0.3f), 5f);
         }
+        
         //CameraControl.instance.SwitchTarget(0);
         CameraControl.instance.players[2].gameObject.SetActive(true);//light appears
         CameraControl.instance.ChangeCheckPointPos(0);
         WindCurrent.GetComponent<SpriteRenderer>().DOFade(0,10).OnComplete(()=> WindCurrent.SetActive(false));
         
         this.gameObject.SetActive(false);
+        CameraControl.instance.ShowText("the wind was calmed down", 5);
     }
 }

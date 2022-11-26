@@ -35,9 +35,11 @@ public class WoodController : PlayerController
 #endif
     public override void Action()
     {
-        CameraControl.instance.CameraZoomOut(10, new Vector3(40, 10, -10), 0,30);
+        CameraControl.instance.CameraZoomOut(10, new Vector3(40, 10, -10), -1,30);
         DOVirtual.Float(0, 1, 10f, v => grass.SetFloat("_Fade", v)).SetEase(Ease.InQuad);
         this.gameObject.SetActive(false);
+        CameraControl.instance.checkPoint.SetActive(false);
         water.transform.DOMoveY(-23, 6);
+        CameraControl.instance.ShowText("the trees grow again, thank to your helps",5);
     }
 }
