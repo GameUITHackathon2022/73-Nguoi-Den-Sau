@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using DG.Tweening;
+using UnityEngine.Rendering.Universal;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class CameraControl : MonoBehaviour
 {
+    public Joystick moveAnalog;
+    public Button jumpButton;
+    public Material grass;
+    public List<Light2D> lights;
+    public Transform[] checkPointPos;
+    public GameObject checkPoint;
+    public List<PlayerController> players;
     public static CameraControl instance;
     public bool isSwappable;
     protected Transform trans;
@@ -31,11 +40,51 @@ public class CameraControl : MonoBehaviour
         instance = this;
         trans = transform;
     }
+    private void Start()
+    {
+        grass.SetFloat("_Fade", 0);
+    }
     public IEnumerator ResetIsSwappable(float duration)
     {
         isSwappable = false;
         yield return new WaitForSeconds(duration);
         isSwappable = true;
+    }
+    public void ChangeCheckPointPos(int transIndex)
+    {
+        checkPoint.transform.position = checkPointPos[transIndex].position;
+    }
+    public void CameraZoomOut(float duration, Vector3 pos, int index = 0, int size = 15)
+    {
+        currentPlayer = null;
+        this.transform.DOMove(pos, duration/4);
+        
+        Camera.main.DOOrthoSize(size, duration).OnComplete(()=> { SwitchTarget(index); Camera.main.DOOrthoSize(6, 1); });
+        
+        
+    }
+    public void CameraZoomOut(float duration, Vector3 pos, PlayerController player, int size = 15)
+    {
+        currentPlayer = null;
+        this.transform.DOMove(pos, duration / 4);
+
+        Camera.main.DOOrthoSize(size, duration).OnComplete(() => { SwitchTarget(player); Camera.main.DOOrthoSize(6, 1); });
+
+
+    }
+    public void LightAction()
+    {
+        lights[0].transform.parent.transform.DOMove(new Vector3(48, 20, 0), 5f).SetEase(Ease.InQuad);
+        lights[0].color = new Color(1,0.3f,0.8f);
+        lights[1].color = new Color(1, 1, 1);
+    }
+    public void SwitchTarget(int playerIndex)
+    {
+        currentPlayer = players[playerIndex];
+    }
+    public void SwitchTarget(PlayerController player)
+    {
+        currentPlayer = player;
     }
     protected bool IsMarginY()
     {

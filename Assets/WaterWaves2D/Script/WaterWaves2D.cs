@@ -10,14 +10,12 @@ using UnityEditor;
 public class WaterWaves2D:MonoBehaviour{
 
 	#region Variables
-	[SerializeField]
-	private Mesh mesh;
+	public Mesh mesh;
 	[SerializeField]
 	private List<Vector3> vertices=new List<Vector3>(200);
 	[SerializeField]
 	private List<Vector3> uvs=new List<Vector3>(200);
-	[SerializeField]
-	private List<Color> colors=new List<Color>(200);
+	public List<Color> colors=new List<Color>(200);
 	[SerializeField]
 	private List<Vector3> normals=new List<Vector3>(200);
 	[SerializeField]
@@ -452,7 +450,7 @@ public class WaterWaves2D:MonoBehaviour{
 		BuildRectengularMesh(false);
 	}
 
-	private void BuildRectengularMesh(bool onlyVertices){
+	public void BuildRectengularMesh(bool onlyVertices){
 		int pX=points.Count;
 		int pY=lineWidth>0?4:2;
 		float lineWidthModifier=1f;

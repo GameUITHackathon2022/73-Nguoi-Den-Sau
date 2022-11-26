@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MushroomController : PlayerController
 {
+    public Button jumpBtn;
     int doublJumpCount;
     public int doubleJumps;
     [SerializeField] Animator animator;
@@ -15,7 +17,9 @@ public class MushroomController : PlayerController
     ParticleSystem.EmissionModule emissionSplash;
     private void Start()
     {
-        isControlled = true;
+        jumpBtn.onClick.AddListener(Jump);
+        CameraControl.instance.CameraZoomOut(6, CameraControl.instance.players[1].transform.position, 0, 15);
+        //isControlled = true;
         rb = GetComponent<Rigidbody2D>();
         if (bubbleParticle != null)
             emissionBubble.rateOverTime = 0;
@@ -24,29 +28,58 @@ public class MushroomController : PlayerController
         //animator = GetComponent<Animator>();
         doublJumpCount = doubleJumps;
     }
-    private void FixedUpdate()
+
+#if UNITY_ANDROID
+ private void FixedUpdate()
     {
+
         if (isControlled)
-            Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Move(CameraControl.instance.moveAnalog.Horizontal);
         if (isFlying)
             rb.gravityScale = Mathf.Clamp(transform.position.y / 15, 0, 100);
     }
+#elif UNITY_STANDALONE_WIN
+    private void FixedUpdate()
+    {
+
+        if (isControlled)
+           Move(Input.GetAxis("Horizontal"));
+        if (isFlying)
+            rb.gravityScale = Mathf.Clamp(transform.position.y / 15, 0, 100);
+    }
+#endif
+#if UNITY_STANDALONE_WIN
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && doublJumpCount > 0 && isControlled)
+        {
+            Jump();
+        }
+        if (isGround)
+            doublJumpCount = doubleJumps;
+    }
+#elif UNITY_ANDROID
+    private void Update()
+    {
+        if (isGround)
+            doublJumpCount = doubleJumps;
+    }
+#endif
+    void Jump()
+    {
+        if(doublJumpCount > 0 && isControlled)
         {
             print(doublJumpCount);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             animator.Play("JumpShroom");
             doublJumpCount--;
         }
-        if (isGround)
-            doublJumpCount = doubleJumps;
+        
     }
 
-    void Move(float horizontalInput, float verticalInput)
+    void Move(float horizontalInput)
     {
-        Vector2 input = new Vector2(horizontalInput, verticalInput);
+        Vector2 input = new Vector2(horizontalInput,0);
         if (isGround)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1, GroundLayer);

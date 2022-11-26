@@ -54,18 +54,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CausticPower: 1.47
-    - _CausticScale: 10
+    - _CausticPower: 0.48
+    - _CausticScale: 10.27
     - _CausticSpeed: 1
     - _EnableExternalAlpha: 0
     - _OffSet: 0
     - _RefractionAmount: 0.7
-    - _TilingMultiplier: 0.05
+    - _TilingMultiplier: -0.07
     - _UseMainTexAlpha: 1
     - _WaveSpeed: 5
     m_Colors:
-    - _CausticMovement: {r: 0.1, g: 0, b: 0, a: 0}
-    - _Color: {r: 13.316235, g: 14.928529, b: 5.971411, a: 1}
+    - _CausticMovement: {r: -0.1, g: 0, b: 0, a: 0}
+    - _Color: {r: 11.499498, g: 12.844469, b: 5.178137, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
