@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterController : PlayerController
 {
-    bool inWater;
+    bool inWater = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -17,8 +17,20 @@ public class WaterController : PlayerController
         //if (isFlying)
         //    rb.gravityScale = Mathf.Clamp(transform.position.y / 15, 0, 100);
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            inWater = true;
+            rb.gravityScale = 0;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            inWater = false;
+            rb.gravityScale = 1f;
+        }
     }
 }
