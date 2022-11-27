@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
 public class WoodController : PlayerController
 {
     [SerializeField] Material grass;
@@ -41,5 +40,7 @@ public class WoodController : PlayerController
         CameraControl.instance.checkPoint.SetActive(false);
         water.transform.DOMoveY(-23, 6);
         CameraControl.instance.ShowText("the trees grow again, thank to your helps",5);
+       
     }
+    
 }

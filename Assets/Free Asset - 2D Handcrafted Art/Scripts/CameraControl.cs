@@ -5,6 +5,8 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class CameraControl : MonoBehaviour
 {
@@ -50,10 +52,22 @@ public class CameraControl : MonoBehaviour
     }
     public void ShowText(string content, float duration)
     {
+        if(content == "the trees grow again, thank to your helps")
+        {
+            StartCoroutine(dsdads());
+        }
         dialog.text = content;
         dialog.DOFade(1, duration).SetEase(Ease.OutQuad).OnComplete(()=>dialog.DOFade(0,1f));
     }
-  
+
+    IEnumerator dsdads()
+    {
+        yield return new WaitForSeconds(5);
+        CameraControl.instance.ShowText("Fin", 8);
+        yield return new WaitForSeconds(10);
+        SceneManager.LoadScene("LoadScene");
+    }
+
     public IEnumerator ResetIsSwappable(float duration)
     {
         isSwappable = false;
